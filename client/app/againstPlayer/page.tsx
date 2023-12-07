@@ -3,17 +3,7 @@ import { ChessboardComponent, SideBoardComponent } from "@/components";
 import Image from "next/image";
 import * as FlagIcons from "country-flag-icons/react/3x2";
 import { useState } from "react";
-interface Message {
-  username: string;
-  content: string;
-}
-
-interface MovesKit {
-  [moveNumber: number]: {
-    white: string;
-    black: string;
-  };
-}
+import { Message, MovesKit } from "@/public/utils/types";
 
 const AgainstPlayer: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);

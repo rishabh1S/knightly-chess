@@ -3,11 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import EmojiPicker, { Theme } from "emoji-picker-react";
 import { FaRegFaceSmile } from "react-icons/fa6";
-
-interface Message {
-  username: string;
-  content: string;
-}
+import { Message } from "@/public/utils/types";
 
 interface SideBoardProps {
   onSendMessage: (message: string) => void;
