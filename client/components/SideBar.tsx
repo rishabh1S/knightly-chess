@@ -2,7 +2,7 @@
 import Link from "next/link";
 import React from "react";
 import { FaChessKnight, FaNewspaper } from "react-icons/fa6";
-import { IoPeople } from "react-icons/io5";
+import { IoPeople, IoSettingsOutline } from "react-icons/io5";
 
 const SideBar = () => {
   return (
@@ -48,6 +48,15 @@ const SideBar = () => {
               >
                 <IoPeople size={20} />
                 <span className="flex-1 ms-3 whitespace-nowrap">Social</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/settings"
+                className="flex items-center p-2 text-white hover:bg-slate-900 group"
+              >
+                <IoSettingsOutline size={20} />
+                <span className="flex-1 ms-3 whitespace-nowrap">Settings</span>
               </Link>
             </li>
           </ul>

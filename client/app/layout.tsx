@@ -21,8 +21,8 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <SideBar />
+          <div className="ml-36">{children}</div>
         </Providers>
-        <div className="ml-36">{children}</div>
       </body>
     </html>
   );
