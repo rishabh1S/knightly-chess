@@ -9,3 +9,18 @@ export interface MovesKit {
     black: string;
   };
 }
+
+export interface OptionSquares {
+  [key: string]: {
+    background: string;
+    borderRadius: string;
+  };
+}
+
+export interface RightClickedSquares {
+  [key: string]:
+    | {
+        backgroundColor: string;
+      }
+    | undefined;
+}
