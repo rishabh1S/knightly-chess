@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Providers } from "./provider";
 import "./globals.css";
 import { SideBar } from "@/components";
 
@@ -18,7 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <SideBar />
+        <Providers>
+          <SideBar />
+        </Providers>
         <div className="ml-36">{children}</div>
       </body>
     </html>
