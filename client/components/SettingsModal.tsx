@@ -61,7 +61,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
   return (
     <>
       <Modal
-        size="3xl"
+        size="lg"
         isOpen={isOpen}
         onClose={onClose}
         className="bg-zinc-950"
@@ -76,12 +76,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
                 <p>Choose a theme:</p>
                 <div className="grid grid-cols-3 gap-2">
                   {themes.map((t, index) => (
-                    <Tooltip
-                      color="default"
-                      key={index}
-                      content={t.label}
-                      className="bg-black text-white"
-                    >
+                    <Tooltip color="default" key={index} content={t.label}>
                       <Button
                         color="default"
                         style={{

@@ -8,6 +8,7 @@ import React, {
   CSSProperties,
 } from "react";
 import { NextUIProvider } from "@nextui-org/react";
+import { ThemeProvider } from "next-themes";
 
 type Theme = {
   darkSquareStyle: CSSProperties;
@@ -55,7 +56,15 @@ export const Providers: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   return (
     <BoardThemeProvider>
-      <NextUIProvider>{children}</NextUIProvider>
+      <NextUIProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          themes={["light", "dark"]}
+        >
+          {children}
+        </ThemeProvider>
+      </NextUIProvider>
     </BoardThemeProvider>
   );
 };
