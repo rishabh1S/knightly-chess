@@ -1,5 +1,5 @@
 "use client";
-import { ChessboardComponent, SideBoardComponent } from "@/components";
+import { ChessboardBot, SideBoardComponent } from "@/components";
 import Image from "next/image";
 import * as FlagIcons from "country-flag-icons/react/3x2";
 import { useState } from "react";
@@ -49,7 +49,7 @@ const AgainstBot: React.FC = () => {
             </span>
           </div>
         </div>
-        <ChessboardComponent />
+        <ChessboardBot />
         <div className="flex justify-start w-full gap-1">
           <Image
             src="/images/def_user.jpeg"

@@ -5,7 +5,7 @@ import { Chessboard } from "react-chessboard";
 import { Chess, Square, ChessInstance, ShortMove } from "chess.js";
 import { OptionSquares, RightClickedSquares } from "@/public/utils/types";
 
-const ChessboardComponent: React.FC = () => {
+const ChessboardBot: React.FC = () => {
   const [game, setGame] = useState<ChessInstance>(new Chess());
   const [moveFrom, setMoveFrom] = useState<Square | null>(null);
   const [moveTo, setMoveTo] = useState<Square | null>(null);
@@ -179,4 +179,4 @@ const ChessboardComponent: React.FC = () => {
   );
 };
 
-export default ChessboardComponent;
+export default ChessboardBot;

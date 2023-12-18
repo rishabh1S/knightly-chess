@@ -1,5 +1,6 @@
 import SideBar from "./SideBar";
-import ChessboardComponent from "./Chessboard";
+import ChessboardBot from "./ChessboardBot";
+import ChessboardPlayer from "./ChessboardPlayer";
 import SideBoardComponent from "./SideBoardComponent";
 
-export { SideBar, ChessboardComponent, SideBoardComponent };
+export { SideBar, ChessboardBot, ChessboardPlayer, SideBoardComponent };
