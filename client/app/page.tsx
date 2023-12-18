@@ -16,9 +16,9 @@ const levels = {
 };
 
 const timers = {
-  "Rapid 🤓": 10,
-  "Blitz 🧐": 3,
-  "Bullet 😵": 1,
+  "Rapid ⏱️": 10,
+  "Blitz ⚡": 3,
+  "Bullet 🔥": 1,
 };
 
 export default function Home() {
@@ -27,7 +27,7 @@ export default function Home() {
       <Navbar disableAnimation isBordered>
         <NavbarContent className="pr-3" justify="center">
           <NavbarBrand>
-            <p className="font-black text-black">Knightly</p>
+            <p className="font-black text-3xl">Knightly</p>
           </NavbarBrand>
         </NavbarContent>
       </Navbar>
