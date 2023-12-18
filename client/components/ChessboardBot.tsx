@@ -3,8 +3,12 @@
 import React, { useState, useMemo } from "react";
 import { Chessboard } from "react-chessboard";
 import { Chess, Square, ChessInstance, ShortMove } from "chess.js";
-import { OptionSquares, RightClickedSquares } from "@/public/utils/types";
-
+import {
+  OptionSquares,
+  RightClickedSquares,
+  convertCSSPropertiesToStringObject,
+} from "@/public/utils/types";
+import { useBoardTheme } from "@/app/provider";
 class Engine {
   private stockfish: Worker | null;
 
@@ -54,6 +58,7 @@ const ChessboardBot: React.FC = () => {
   const engine = useMemo(() => new Engine(), []);
   const [game, setGame] = useState<ChessInstance>(new Chess());
   const [stockfishLevel, setStockfishLevel] = useState(2);
+  const { theme } = useBoardTheme();
   const [moveFrom, setMoveFrom] = useState<Square | null>(null);
   const [moveTo, setMoveTo] = useState<Square | null>(null);
   const [showPromotionDialog, setShowPromotionDialog] = useState(false);
@@ -221,8 +226,12 @@ const ChessboardBot: React.FC = () => {
         }}
         promotionToSquare={moveTo}
         showPromotionDialog={showPromotionDialog}
-        customDarkSquareStyle={{ backgroundColor: "#779952" }}
-        customLightSquareStyle={{ backgroundColor: "#edeed1" }}
+        customDarkSquareStyle={convertCSSPropertiesToStringObject(
+          theme.darkSquareStyle
+        )}
+        customLightSquareStyle={convertCSSPropertiesToStringObject(
+          theme.lightSquareStyle
+        )}
       />
     </>
   );

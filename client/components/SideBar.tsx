@@ -1,10 +1,15 @@
-/* eslint-disable @next/next/no-img-element */
+"use client";
+
 import Link from "next/link";
 import React from "react";
 import { FaChessKnight, FaNewspaper } from "react-icons/fa6";
 import { IoPeople, IoSettingsOutline } from "react-icons/io5";
+import { useDisclosure } from "@nextui-org/react";
+import { SettingsModal } from ".";
+import Image from "next/image";
 
 const SideBar = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <div>
       <aside
@@ -14,10 +19,11 @@ const SideBar = () => {
       >
         <div className="h-full py-4 overflow-y-auto bg-slate-950">
           <Link href="/" className="flex items-center ps-2 mb-5">
-            <img
+            <Image
               src="/images/horse.png"
-              className="h-6 sm:h-7"
               alt="Knightly Logo"
+              width={28}
+              height={28}
             />
             <span className="self-center text-xl font-bold">Knightly</span>
           </Link>
@@ -52,7 +58,11 @@ const SideBar = () => {
             </li>
             <li>
               <Link
-                href="/settings"
+                href=""
+                onClick={(e) => {
+                  e.preventDefault();
+                  onOpen();
+                }}
                 className="flex items-center p-2 text-white hover:bg-slate-900 group"
               >
                 <IoSettingsOutline size={20} />
@@ -62,6 +72,7 @@ const SideBar = () => {
           </ul>
         </div>
       </aside>
+      <SettingsModal isOpen={isOpen} onClose={onClose} />
     </div>
   );
 };

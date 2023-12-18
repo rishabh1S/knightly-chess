@@ -1,3 +1,6 @@
+// @ts-nocheck
+
+import { CSSProperties } from "react";
 export interface Message {
   username: string;
   content: string;
@@ -24,3 +27,15 @@ export interface RightClickedSquares {
       }
     | undefined;
 }
+
+export const convertCSSPropertiesToStringObject = (
+  cssProperties: CSSProperties
+): Record<string, string> => {
+  const stringObject: Record<string, string> = {};
+  for (const key in cssProperties) {
+    if (typeof cssProperties[key] === "string") {
+      stringObject[key] = cssProperties[key] as string;
+    }
+  }
+  return stringObject;
+};
