@@ -1,12 +1,59 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Chessboard } from "react-chessboard";
 import { Chess, Square, ChessInstance, ShortMove } from "chess.js";
 import { OptionSquares, RightClickedSquares } from "@/public/utils/types";
 
+class Engine {
+  private stockfish: Worker | null;
+
+  constructor() {
+    this.stockfish =
+      typeof Worker !== "undefined" ? new Worker("/stockfish.js") : null;
+    this.onMessage = this.onMessage.bind(this);
+
+    if (this.stockfish) {
+      this.sendMessage("uci");
+      this.sendMessage("isready");
+    }
+  }
+
+  onMessage(callback: (data: { bestMove: string }) => void) {
+    if (this.stockfish) {
+      this.stockfish.addEventListener("message", (e) => {
+        const bestMove = e.data?.match(/bestmove\s+(\S+)/)?.[1];
+        callback({ bestMove });
+      });
+    }
+  }
+
+  evaluatePosition(fen: string, depth: number) {
+    if (this.stockfish) {
+      this.stockfish.postMessage(`position fen ${fen}`);
+      this.stockfish.postMessage(`go depth ${depth}`);
+    }
+  }
+
+  stop() {
+    this.sendMessage("stop");
+  }
+
+  quit() {
+    this.sendMessage("quit");
+  }
+
+  private sendMessage(message: string) {
+    if (this.stockfish) {
+      this.stockfish.postMessage(message);
+    }
+  }
+}
+
 const ChessboardBot: React.FC = () => {
+  const engine = useMemo(() => new Engine(), []);
   const [game, setGame] = useState<ChessInstance>(new Chess());
+  const [stockfishLevel, setStockfishLevel] = useState(2);
   const [moveFrom, setMoveFrom] = useState<Square | null>(null);
   const [moveTo, setMoveTo] = useState<Square | null>(null);
   const [showPromotionDialog, setShowPromotionDialog] = useState(false);
@@ -14,14 +61,6 @@ const ChessboardBot: React.FC = () => {
     useState<RightClickedSquares>({});
   const moveSquares = {};
   const [optionSquares, setOptionSquares] = useState<OptionSquares>({});
-
-  function safeGameMutate(modify: (game: ChessInstance) => void) {
-    setGame((g) => {
-      const update = { ...g };
-      modify(update);
-      return update;
-    });
-  }
 
   function getMoveOptions(square: Square) {
     const moves = game.moves({
@@ -52,15 +91,25 @@ const ChessboardBot: React.FC = () => {
     return true;
   }
 
-  function makeRandomMove() {
-    const possibleMoves = game.moves();
+  function makeStockfishMove() {
+    engine.evaluatePosition(game.fen(), stockfishLevel);
+    engine.onMessage(({ bestMove }) => {
+      if (bestMove) {
+        const move = game.move({
+          from: bestMove.substring(0, 2) as Square,
+          to: bestMove.substring(2, 4) as Square,
+          promotion: bestMove.substring(4, 5) as
+            | "b"
+            | "n"
+            | "r"
+            | "q"
+            | undefined,
+        });
 
-    if (game.game_over() || game.in_draw() || possibleMoves.length === 0)
-      return;
-
-    const randomIndex = Math.floor(Math.random() * possibleMoves.length);
-    safeGameMutate((game) => {
-      game.move(possibleMoves[randomIndex]);
+        if (move) {
+          setGame(game);
+        }
+      }
     });
   }
 
@@ -113,7 +162,7 @@ const ChessboardBot: React.FC = () => {
 
       setGame(gameCopy);
 
-      setTimeout(makeRandomMove, 300);
+      setTimeout(makeStockfishMove, 1000);
       setMoveFrom(null);
       setMoveTo(null);
       setOptionSquares({});
@@ -130,7 +179,7 @@ const ChessboardBot: React.FC = () => {
         promotion: piece[1].toLowerCase() ?? "q",
       });
       setGame(gameCopy);
-      setTimeout(makeRandomMove, 300);
+      setTimeout(makeStockfishMove, 1000);
     }
 
     setMoveFrom(null);
