@@ -57,8 +57,7 @@ class Engine {
 const ChessboardBot: React.FC = () => {
   const engine = useMemo(() => new Engine(), []);
   const [game, setGame] = useState<ChessInstance>(new Chess());
-  const [stockfishLevel, setStockfishLevel] = useState(2);
-  const { theme } = useBoardTheme();
+  const { theme, stockfishLevel } = useBoardTheme();
   const [moveFrom, setMoveFrom] = useState<Square | null>(null);
   const [moveTo, setMoveTo] = useState<Square | null>(null);
   const [showPromotionDialog, setShowPromotionDialog] = useState(false);
@@ -205,6 +204,7 @@ const ChessboardBot: React.FC = () => {
           : { backgroundColor: colour },
     });
   }
+  console.log(stockfishLevel);
   return (
     <>
       <Chessboard

@@ -1,11 +1,11 @@
 "use client";
-import { ChessboardPlayer, SideBoardComponent } from "@/components";
+import { ChessboardBot, SideBoardComponent } from "@/components";
 import Image from "next/image";
 import * as FlagIcons from "country-flag-icons/react/3x2";
 import { useState } from "react";
 import { Message, MovesKit } from "@/public/utils/types";
 
-const AgainstPlayer: React.FC = () => {
+const AgainstComputer: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [movesKit, setMovesKit] = useState<MovesKit>({});
 
@@ -49,7 +49,7 @@ const AgainstPlayer: React.FC = () => {
             </span>
           </div>
         </div>
-        <ChessboardPlayer />
+        <ChessboardBot />
         <div className="flex justify-start w-full gap-1">
           <Image
             src="/images/def_user.jpeg"
@@ -77,4 +77,4 @@ const AgainstPlayer: React.FC = () => {
   );
 };
 
-export default AgainstPlayer;
+export default AgainstComputer;

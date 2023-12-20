@@ -4,6 +4,7 @@ import {
   ModalContent,
   ModalHeader,
   ModalBody,
+  ModalFooter,
   Button,
   Tooltip,
 } from "@nextui-org/react";
@@ -44,9 +45,9 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
       label: "Purple",
     },
     {
-      dark: { backgroundColor: "#7E7E7E" },
-      light: { backgroundColor: "#ABABAB" },
-      label: "Metal",
+      dark: { backgroundColor: "#84643F" },
+      light: { backgroundColor: "#BFB7AE" },
+      label: "Brown",
     },
   ];
 
@@ -60,20 +61,15 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
 
   return (
     <>
-      <Modal
-        size="lg"
-        isOpen={isOpen}
-        onClose={onClose}
-        className="bg-zinc-950"
-      >
+      <Modal size="lg" isOpen={isOpen} onClose={onClose}>
         <ModalContent>
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Board Theme
+                Game Settings
               </ModalHeader>
               <ModalBody>
-                <p>Choose a theme:</p>
+                <p>Board Theme</p>
                 <div className="grid grid-cols-3 gap-2">
                   {themes.map((t, index) => (
                     <Tooltip color="default" key={index} content={t.label}>
@@ -89,6 +85,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
                   ))}
                 </div>
               </ModalBody>
+              <ModalFooter></ModalFooter>
             </>
           )}
         </ModalContent>

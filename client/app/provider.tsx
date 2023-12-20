@@ -18,6 +18,8 @@ type Theme = {
 type BoardThemeContextType = {
   theme: Theme;
   setTheme: (theme: Theme) => void;
+  stockfishLevel: number;
+  setStockfishLevel: (level: number) => void;
 };
 
 const BoardThemeContext = createContext<BoardThemeContextType | undefined>(
@@ -35,9 +37,12 @@ export const BoardThemeProvider: React.FC<BoardThemeProviderProps> = ({
     darkSquareStyle: { backgroundColor: "#779952" },
     lightSquareStyle: { backgroundColor: "#edeed1" },
   });
+  const [stockfishLevel, setStockfishLevel] = useState<number>(2);
 
   return (
-    <BoardThemeContext.Provider value={{ theme, setTheme }}>
+    <BoardThemeContext.Provider
+      value={{ theme, setTheme, stockfishLevel, setStockfishLevel }}
+    >
       {children}
     </BoardThemeContext.Provider>
   );
