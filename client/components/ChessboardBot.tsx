@@ -9,6 +9,7 @@ import {
   convertCSSPropertiesToStringObject,
 } from "@/public/utils/types";
 import { useBoardStore } from "@/app/store";
+import { useSearchParams } from "next/navigation";
 
 class Engine {
   private stockfish: Worker | null;
@@ -59,7 +60,6 @@ const ChessboardBot: React.FC = () => {
   const engine = useMemo(() => new Engine(), []);
   const [game, setGame] = useState<ChessInstance>(new Chess());
   const theme = useBoardStore((state) => state.theme);
-  const stockfishLevel = useBoardStore((state) => state.stockfishLevel);
   const [moveFrom, setMoveFrom] = useState<Square | null>(null);
   const [moveTo, setMoveTo] = useState<Square | null>(null);
   const [showPromotionDialog, setShowPromotionDialog] = useState(false);
@@ -67,6 +67,8 @@ const ChessboardBot: React.FC = () => {
     useState<RightClickedSquares>({});
   const moveSquares = {};
   const [optionSquares, setOptionSquares] = useState<OptionSquares>({});
+  const searchParams = useSearchParams();
+  const stockfishLevel = Number(searchParams.get("stockfishLevel"));
 
   function getMoveOptions(square: Square) {
     const moves = game.moves({
@@ -168,7 +170,7 @@ const ChessboardBot: React.FC = () => {
 
       setGame(gameCopy);
 
-      setTimeout(makeStockfishMove, 1000);
+      setTimeout(makeStockfishMove, 500);
       setMoveFrom(null);
       setMoveTo(null);
       setOptionSquares({});
@@ -185,7 +187,7 @@ const ChessboardBot: React.FC = () => {
         promotion: piece[1].toLowerCase() ?? "q",
       });
       setGame(gameCopy);
-      setTimeout(makeStockfishMove, 1000);
+      setTimeout(makeStockfishMove, 500);
     }
 
     setMoveFrom(null);
@@ -206,7 +208,6 @@ const ChessboardBot: React.FC = () => {
           : { backgroundColor: colour },
     });
   }
-  console.log(stockfishLevel);
   return (
     <>
       <Chessboard

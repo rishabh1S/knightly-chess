@@ -8,8 +8,6 @@ type Theme = {
 type BoardStore = {
   theme: Theme;
   setTheme: (theme: Theme) => void;
-  stockfishLevel: number;
-  setStockfishLevel: (level: number) => void;
 };
 
 export const useBoardStore = create<BoardStore>((set) => ({
@@ -18,6 +16,4 @@ export const useBoardStore = create<BoardStore>((set) => ({
     lightSquareStyle: { backgroundColor: "#edeed1" },
   },
   setTheme: (theme) => set({ theme }),
-  stockfishLevel: 2,
-  setStockfishLevel: (level) => set({ stockfishLevel: level }),
 }));

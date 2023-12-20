@@ -1,8 +1,8 @@
 "use client";
+import { useState } from "react";
 import { ChessboardBot, SideBoardComponent } from "@/components";
 import Image from "next/image";
 import * as FlagIcons from "country-flag-icons/react/3x2";
-import { useState } from "react";
 import { Message, MovesKit } from "@/public/utils/types";
 
 const AgainstComputer: React.FC = () => {

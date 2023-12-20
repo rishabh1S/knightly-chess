@@ -16,7 +16,6 @@ import {
 } from "@nextui-org/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useBoardStore } from "@/app/store";
 
 interface GameSelectionModalProps {
   isOpen: boolean;
@@ -48,7 +47,7 @@ const GameSelectionModal: React.FC<GameSelectionModalProps> = ({
   onClose,
   selectedGameMode,
 }) => {
-  const setStockfishLevel = useBoardStore((state) => state.setStockfishLevel);
+  const [stockfishLevel, setStockfishLevel] = useState(2);
 
   return (
     <>
@@ -93,7 +92,9 @@ const GameSelectionModal: React.FC<GameSelectionModalProps> = ({
               </ModalBody>
               <ModalFooter className="flex justify-center">
                 <Tooltip content="Black">
-                  <Link href="/againstComputer">
+                  <Link
+                    href={`/againstComputer?stockfishLevel=${stockfishLevel}`}
+                  >
                     <Button
                       isIconOnly
                       size="lg"
@@ -112,7 +113,9 @@ const GameSelectionModal: React.FC<GameSelectionModalProps> = ({
                   </Link>
                 </Tooltip>
                 <Tooltip content="White">
-                  <Link href="/againstComputer">
+                  <Link
+                    href={`/againstComputer?stockfishLevel=${stockfishLevel}`}
+                  >
                     <Button
                       isIconOnly
                       size="lg"
