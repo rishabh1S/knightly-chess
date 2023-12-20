@@ -36,14 +36,14 @@ const AgainstComputer: React.FC = () => {
       <div className="flex flex-col items-center justify-center pl-12 gap-2">
         <div className="flex justify-start w-full py-1 gap-1">
           <Image
-            src="/images/def_bot.jpeg"
+            src="/images/def_stock.jpeg"
             width={40}
             height={40}
             alt="Bot Profile"
             className="rounded-md"
           />
           <div className="flex items-start justify-center gap-1 font-semibold">
-            Bot<span className="text-gray-300 font-light">(1200)</span>
+            StockFish<span className="text-gray-300 font-light">(1200)</span>
             <span>
               <FlagIcons.US className="w-4 h-4 mx-1 mt-1" />
             </span>

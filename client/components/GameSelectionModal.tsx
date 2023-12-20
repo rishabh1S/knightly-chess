@@ -1,21 +1,18 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Modal,
   ModalContent,
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Button,
   Slider,
-  Tooltip,
   RadioGroup,
   Radio,
   cn,
 } from "@nextui-org/react";
-import Image from "next/image";
-import Link from "next/link";
+import { PlayAsButton } from ".";
 
 interface GameSelectionModalProps {
   isOpen: boolean;
@@ -48,12 +45,13 @@ const GameSelectionModal: React.FC<GameSelectionModalProps> = ({
   selectedGameMode,
 }) => {
   const [stockfishLevel, setStockfishLevel] = useState(2);
+  const [timer, setTimer] = useState(10);
 
   return (
     <>
       <Modal size="lg" isOpen={isOpen} onClose={onClose}>
         <ModalContent className="p-2">
-          {(onClose) => (
+          {() => (
             <>
               <ModalHeader className="flex justify-center text-3xl font-extralight">
                 {selectedGameMode === "friend"
@@ -72,6 +70,9 @@ const GameSelectionModal: React.FC<GameSelectionModalProps> = ({
                     minValue={1}
                     defaultValue={10}
                     className="max-w-md"
+                    onChange={(value) => {
+                      setTimer(Number(value));
+                    }}
                   />
                 )}
                 {selectedGameMode === "computer" && (
@@ -91,48 +92,33 @@ const GameSelectionModal: React.FC<GameSelectionModalProps> = ({
                 )}
               </ModalBody>
               <ModalFooter className="flex justify-center">
-                <Tooltip content="Black">
-                  <Link
-                    href={`/againstComputer?stockfishLevel=${stockfishLevel}`}
-                  >
-                    <Button
-                      isIconOnly
-                      size="lg"
-                      radius="none"
-                      color="default"
-                      variant="ghost"
-                      className="bg-zinc-800 mx-1"
-                    >
-                      <Image
-                        src="/images/chess_black.svg"
-                        alt="chess-black"
-                        width={50}
-                        height={50}
-                      />
-                    </Button>
-                  </Link>
-                </Tooltip>
-                <Tooltip content="White">
-                  <Link
-                    href={`/againstComputer?stockfishLevel=${stockfishLevel}`}
-                  >
-                    <Button
-                      isIconOnly
-                      size="lg"
-                      radius="none"
-                      color="default"
-                      variant="ghost"
-                      className="bg-zinc-800 mx-1"
-                    >
-                      <Image
-                        src="/images/chess_white.svg"
-                        alt="chess-white"
-                        width={50}
-                        height={50}
-                      />
-                    </Button>
-                  </Link>
-                </Tooltip>
+                {selectedGameMode === "friend" ? (
+                  <>
+                    <PlayAsButton
+                      content="Black"
+                      href={`/againstFriend?timer=${timer}&playAs=black`}
+                      stockfishLevel={stockfishLevel}
+                    />
+                    <PlayAsButton
+                      content="White"
+                      href={`/againstFriend?timer=${timer}&playAs=white`}
+                      stockfishLevel={stockfishLevel}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <PlayAsButton
+                      content="Black"
+                      href={`/againstComputer?stockfishLevel=${stockfishLevel}&playAs=black`}
+                      stockfishLevel={stockfishLevel}
+                    />
+                    <PlayAsButton
+                      content="White"
+                      href={`/againstComputer?stockfishLevel=${stockfishLevel}&playAs=white`}
+                      stockfishLevel={stockfishLevel}
+                    />
+                  </>
+                )}
               </ModalFooter>
             </>
           )}

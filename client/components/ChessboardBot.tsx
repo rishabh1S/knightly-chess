@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Chessboard } from "react-chessboard";
 import { Chess, Square, ChessInstance, ShortMove } from "chess.js";
 import {
@@ -10,6 +10,7 @@ import {
 } from "@/public/utils/types";
 import { useBoardStore } from "@/app/store";
 import { useSearchParams } from "next/navigation";
+import { BoardOrientation } from "react-chessboard/dist/chessboard/types";
 
 class Engine {
   private stockfish: Worker | null;
@@ -69,6 +70,14 @@ const ChessboardBot: React.FC = () => {
   const [optionSquares, setOptionSquares] = useState<OptionSquares>({});
   const searchParams = useSearchParams();
   const stockfishLevel = Number(searchParams.get("stockfishLevel"));
+  const playAs = searchParams.get("playAs");
+
+  useEffect(() => {
+    if (playAs === "black") {
+      makeStockfishMove();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [playAs]);
 
   function getMoveOptions(square: Square) {
     const moves = game.moves({
@@ -213,6 +222,7 @@ const ChessboardBot: React.FC = () => {
       <Chessboard
         animationDuration={200}
         arePiecesDraggable={false}
+        boardOrientation={playAs as BoardOrientation}
         position={game.fen()}
         boardWidth={560}
         onSquareClick={onSquareClick}

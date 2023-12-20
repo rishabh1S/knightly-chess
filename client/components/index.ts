@@ -4,6 +4,7 @@ import ChessboardPlayer from "./ChessboardPlayer";
 import SideBoardComponent from "./SideBoardComponent";
 import SettingsModal from "./SettingsModal";
 import GameSelectionModal from "./GameSelectionModal";
+import PlayAsButton from "./PlayAsButton";
 
 export {
   SideBar,
@@ -12,4 +13,5 @@ export {
   SideBoardComponent,
   SettingsModal,
   GameSelectionModal,
+  PlayAsButton,
 };
