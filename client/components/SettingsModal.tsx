@@ -8,7 +8,7 @@ import {
   Button,
   Tooltip,
 } from "@nextui-org/react";
-import { useBoardTheme } from "@/app/provider";
+import { useBoardStore } from "@/app/store";
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -16,7 +16,8 @@ interface SettingsModalProps {
 }
 
 const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
-  const { theme, setTheme } = useBoardTheme();
+  const theme = useBoardStore((state) => state.theme);
+  const setTheme = useBoardStore((state) => state.setTheme);
 
   const themes = [
     {

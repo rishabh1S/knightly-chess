@@ -8,7 +8,8 @@ import {
   RightClickedSquares,
   convertCSSPropertiesToStringObject,
 } from "@/public/utils/types";
-import { useBoardTheme } from "@/app/provider";
+import { useBoardStore } from "@/app/store";
+
 class Engine {
   private stockfish: Worker | null;
 
@@ -57,7 +58,8 @@ class Engine {
 const ChessboardBot: React.FC = () => {
   const engine = useMemo(() => new Engine(), []);
   const [game, setGame] = useState<ChessInstance>(new Chess());
-  const { theme, stockfishLevel } = useBoardTheme();
+  const theme = useBoardStore((state) => state.theme);
+  const stockfishLevel = useBoardStore((state) => state.stockfishLevel);
   const [moveFrom, setMoveFrom] = useState<Square | null>(null);
   const [moveTo, setMoveTo] = useState<Square | null>(null);
   const [showPromotionDialog, setShowPromotionDialog] = useState(false);

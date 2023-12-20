@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Modal,
   ModalContent,
@@ -16,7 +16,7 @@ import {
 } from "@nextui-org/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useBoardTheme } from "@/app/provider";
+import { useBoardStore } from "@/app/store";
 
 interface GameSelectionModalProps {
   isOpen: boolean;
@@ -48,7 +48,8 @@ const GameSelectionModal: React.FC<GameSelectionModalProps> = ({
   onClose,
   selectedGameMode,
 }) => {
-  const { stockfishLevel, setStockfishLevel } = useBoardTheme();
+  const setStockfishLevel = useBoardStore((state) => state.setStockfishLevel);
+
   return (
     <>
       <Modal size="lg" isOpen={isOpen} onClose={onClose}>
@@ -81,7 +82,6 @@ const GameSelectionModal: React.FC<GameSelectionModalProps> = ({
                       orientation="horizontal"
                       onValueChange={(value) => {
                         setStockfishLevel(Number(value));
-                        console.log(stockfishLevel);
                       }}
                     >
                       <CustomRadio value="2">Easy 🤓</CustomRadio>
