@@ -5,6 +5,7 @@ import SideBoardComponent from "./SideBoardComponent";
 import SettingsModal from "./SettingsModal";
 import GameSelectionModal from "./GameSelectionModal";
 import PlayAsButton from "./PlayAsButton";
+import GameModal from "./GameModal";
 
 export {
   SideBar,
@@ -14,4 +15,5 @@ export {
   SettingsModal,
   GameSelectionModal,
   PlayAsButton,
+  GameModal,
 };

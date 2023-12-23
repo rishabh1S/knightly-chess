@@ -11,6 +11,7 @@ import {
 import { useBoardStore } from "@/app/store";
 import { useSearchParams } from "next/navigation";
 import { BoardOrientation } from "react-chessboard/dist/chessboard/types";
+import { GameModal } from ".";
 
 class Engine {
   private stockfish: Worker | null;
@@ -71,6 +72,9 @@ const ChessboardBot: React.FC = () => {
   const searchParams = useSearchParams();
   const stockfishLevel = Number(searchParams.get("stockfishLevel"));
   const playAs = searchParams.get("playAs");
+  const [isGameOver, setIsGameOver] = useState(false);
+  const [gameResult, setGameResult] = useState<string | null>(null);
+  const [showGameModal, setShowGameModal] = useState(false);
 
   useEffect(() => {
     if (playAs === "black") {
@@ -78,6 +82,22 @@ const ChessboardBot: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playAs]);
+
+  useEffect(() => {
+    if (game.in_checkmate() || game.in_draw() || game.in_stalemate()) {
+      setIsGameOver(true);
+      if (game.in_checkmate()) {
+        if (playAs === "black") {
+          setGameResult(game.turn() === "w" ? "User wins!" : "StockFish wins!");
+        } else {
+          setGameResult(game.turn() === "w" ? "StockFish wins!" : "User wins!");
+        }
+      } else {
+        setGameResult("It's a draw!");
+      }
+      setShowGameModal(true);
+    }
+  }, [game, playAs]);
 
   function getMoveOptions(square: Square) {
     const moves = game.moves({
@@ -217,6 +237,14 @@ const ChessboardBot: React.FC = () => {
           : { backgroundColor: colour },
     });
   }
+
+  function onNewGame() {
+    game.reset();
+    if (playAs === "black") {
+      makeStockfishMove();
+    }
+  }
+
   return (
     <>
       <Chessboard
@@ -245,6 +273,12 @@ const ChessboardBot: React.FC = () => {
         customLightSquareStyle={convertCSSPropertiesToStringObject(
           theme.lightSquareStyle
         )}
+      />
+      <GameModal
+        isOpen={showGameModal}
+        onClose={() => setShowGameModal(false)}
+        gameResult={gameResult}
+        onNewGame={onNewGame}
       />
     </>
   );

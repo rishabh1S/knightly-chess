@@ -85,8 +85,8 @@ const GameSelectionModal: React.FC<GameSelectionModalProps> = ({
                       }}
                     >
                       <CustomRadio value="2">Easy 🤓</CustomRadio>
-                      <CustomRadio value="8">Medium 🧐</CustomRadio>
-                      <CustomRadio value="18">Hard 😵</CustomRadio>
+                      <CustomRadio value="6">Medium 🧐</CustomRadio>
+                      <CustomRadio value="12">Hard 😵</CustomRadio>
                     </RadioGroup>
                   </div>
                 )}

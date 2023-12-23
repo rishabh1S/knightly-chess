@@ -4,10 +4,15 @@ import { ChessboardBot, SideBoardComponent } from "@/components";
 import Image from "next/image";
 import * as FlagIcons from "country-flag-icons/react/3x2";
 import { Message, MovesKit } from "@/public/utils/types";
+import { useSearchParams } from "next/navigation";
 
 const AgainstComputer: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [movesKit, setMovesKit] = useState<MovesKit>({});
+  const searchParams = useSearchParams();
+  const stockfishLevel = Number(searchParams.get("stockfishLevel"));
+  const stockfishLevelSymbol =
+    stockfishLevel === 2 ? "E" : stockfishLevel === 6 ? "M" : "H";
 
   const handleSendMessage = (message: string) => {
     if (message.trim() !== "") {
@@ -17,17 +22,6 @@ const AgainstComputer: React.FC = () => {
       };
       setMessages((prevMessages) => [...prevMessages, newMessage]);
     }
-  };
-
-  const handleMakeMove = (whiteMove: string, blackMove: string) => {
-    const moveNumber = Object.keys(movesKit).length + 1;
-    setMovesKit((prevMovesKit) => ({
-      ...prevMovesKit,
-      [moveNumber]: {
-        white: whiteMove,
-        black: blackMove,
-      },
-    }));
   };
 
   return (
@@ -43,7 +37,10 @@ const AgainstComputer: React.FC = () => {
             className="rounded-md"
           />
           <div className="flex items-start justify-center gap-1 font-semibold">
-            StockFish<span className="text-gray-300 font-light">(1200)</span>
+            StockFish
+            <span className="text-gray-300 font-light">
+              ({stockfishLevelSymbol})
+            </span>
             <span>
               <FlagIcons.US className="w-4 h-4 mx-1 mt-1" />
             </span>
@@ -59,7 +56,7 @@ const AgainstComputer: React.FC = () => {
             className="rounded-md"
           />
           <div className="flex items-start justify-center gap-1 font-semibold">
-            Rishabh <span className="text-gray-300 font-light">(1000)</span>
+            Rishabh
             <span>
               <FlagIcons.IN className="w-4 h-4 mx-1 mt-1" />
             </span>
