@@ -72,7 +72,6 @@ const ChessboardBot: React.FC = () => {
   const searchParams = useSearchParams();
   const stockfishLevel = Number(searchParams.get("stockfishLevel"));
   const playAs = searchParams.get("playAs");
-  const [isGameOver, setIsGameOver] = useState(false);
   const [gameResult, setGameResult] = useState<string | null>(null);
   const [showGameModal, setShowGameModal] = useState(false);
 
@@ -85,7 +84,6 @@ const ChessboardBot: React.FC = () => {
 
   useEffect(() => {
     if (game.in_checkmate() || game.in_draw() || game.in_stalemate()) {
-      setIsGameOver(true);
       if (game.in_checkmate()) {
         if (playAs === "black") {
           setGameResult(game.turn() === "w" ? "User wins!" : "StockFish wins!");
