@@ -3,17 +3,15 @@ import { useState } from "react";
 import { ChessboardBot, SideBoardComponent } from "@/components";
 import Image from "next/image";
 import * as FlagIcons from "country-flag-icons/react/3x2";
-import { Message, MovesKit } from "@/public/utils/types";
+import { Message } from "@/public/utils/types";
 import { useSearchParams } from "next/navigation";
 
 const AgainstComputer: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [movesKit, setMovesKit] = useState<MovesKit>({});
   const searchParams = useSearchParams();
   const stockfishLevel = Number(searchParams.get("stockfishLevel"));
   const stockfishLevelSymbol =
     stockfishLevel === 2 ? "E" : stockfishLevel === 6 ? "M" : "H";
-
   const handleSendMessage = (message: string) => {
     if (message.trim() !== "") {
       const newMessage: Message = {
@@ -68,7 +66,6 @@ const AgainstComputer: React.FC = () => {
       <SideBoardComponent
         onSendMessage={handleSendMessage}
         messages={messages}
-        moves={Object.values(movesKit)}
       />
     </div>
   );

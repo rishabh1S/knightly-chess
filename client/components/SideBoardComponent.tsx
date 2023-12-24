@@ -4,21 +4,21 @@ import React, { useState, useRef, useEffect } from "react";
 import EmojiPicker, { Theme } from "emoji-picker-react";
 import { FaRegFaceSmile } from "react-icons/fa6";
 import { Message } from "@/public/utils/types";
+import { useBoardStore } from "@/app/store";
 
 interface SideBoardProps {
   onSendMessage: (message: string) => void;
   messages: Message[];
-  moves: { white: string; black: string }[];
 }
 
 const SideBoardComponent: React.FC<SideBoardProps> = ({
   onSendMessage,
   messages,
-  moves,
 }) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [message, setMessage] = useState("");
   const emojiPickerRef = useRef<HTMLDivElement>(null);
+  const moves = useBoardStore((state) => state.moves);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -58,15 +58,18 @@ const SideBoardComponent: React.FC<SideBoardProps> = ({
           <div className="text-xl font-semibold w-full border-b-[1px] border-gray-600 px-4">
             Moves
           </div>
-          <ul className="px-4">
-            {moves.map((move, index) => (
-              <li key={index} className="flex items-start">
-                <span className="text-blue-400">{`${index + 1}. ${
-                  move.white
-                }\t\t${move.black}`}</span>
+          <ol className="px-4 list-decimal list-inside">
+            {Object.keys(moves).map((moveNumber) => (
+              <li key={moveNumber} className="font-semibold">
+                <span className="text-blue-400 mx-4">{`${
+                  moves[+moveNumber].white
+                }`}</span>
+                <span className="text-yellow-400 mx-4">{`${
+                  moves[+moveNumber].black
+                }`}</span>
               </li>
             ))}
-          </ul>
+          </ol>
         </div>
       </div>
 

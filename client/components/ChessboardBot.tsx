@@ -62,6 +62,7 @@ const ChessboardBot: React.FC = () => {
   const engine = useMemo(() => new Engine(), []);
   const [game, setGame] = useState<ChessInstance>(new Chess());
   const theme = useBoardStore((state) => state.theme);
+  const addMove = useBoardStore((state) => state.addMove);
   const [moveFrom, setMoveFrom] = useState<Square | null>(null);
   const [moveTo, setMoveTo] = useState<Square | null>(null);
   const [showPromotionDialog, setShowPromotionDialog] = useState(false);
@@ -143,6 +144,7 @@ const ChessboardBot: React.FC = () => {
 
         if (move) {
           setGame(game);
+          addMove(move, playAs === "white" ? "black" : "white");
         }
       }
     });
@@ -196,10 +198,10 @@ const ChessboardBot: React.FC = () => {
       }
 
       setGame(gameCopy);
-
       setTimeout(makeStockfishMove, 500);
       setMoveFrom(null);
       setMoveTo(null);
+      addMove(move, playAs === "white" ? "white" : "black");
       setOptionSquares({});
       return;
     }
@@ -238,6 +240,7 @@ const ChessboardBot: React.FC = () => {
 
   function onNewGame() {
     game.reset();
+    useBoardStore.setState({ moves: [] });
     if (playAs === "black") {
       makeStockfishMove();
     }

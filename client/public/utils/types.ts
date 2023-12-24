@@ -6,12 +6,7 @@ export interface Message {
   content: string;
 }
 
-export interface MovesKit {
-  [moveNumber: number]: {
-    white: string;
-    black: string;
-  };
-}
+export interface MovesKit extends Array<{ white: string; black: string }> {}
 
 export interface OptionSquares {
   [key: string]: {
