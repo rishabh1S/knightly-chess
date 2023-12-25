@@ -7,7 +7,6 @@ import { Message, MovesKit } from "@/public/utils/types";
 
 const AgainstFriend: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [movesKit, setMovesKit] = useState<MovesKit>({});
 
   const handleSendMessage = (message: string) => {
     if (message.trim() !== "") {
@@ -17,17 +16,6 @@ const AgainstFriend: React.FC = () => {
       };
       setMessages((prevMessages) => [...prevMessages, newMessage]);
     }
-  };
-
-  const handleMakeMove = (whiteMove: string, blackMove: string) => {
-    const moveNumber = Object.keys(movesKit).length + 1;
-    setMovesKit((prevMovesKit) => ({
-      ...prevMovesKit,
-      [moveNumber]: {
-        white: whiteMove,
-        black: blackMove,
-      },
-    }));
   };
 
   return (
@@ -71,7 +59,6 @@ const AgainstFriend: React.FC = () => {
       <SideBoardComponent
         onSendMessage={handleSendMessage}
         messages={messages}
-        moves={Object.values(movesKit)}
       />
     </div>
   );
