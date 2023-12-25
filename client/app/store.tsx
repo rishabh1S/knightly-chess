@@ -9,9 +9,9 @@ type Theme = {
 
 type BoardStore = {
   theme: Theme;
-  moves: MovesKit;
+  moves: String[];
   setTheme: (theme: Theme) => void;
-  addMove: (move: ShortMove, playAs: string) => void;
+  setMoves: (moves: String[]) => void;
 };
 
 export const useBoardStore = create<BoardStore>((set) => ({
@@ -21,30 +21,5 @@ export const useBoardStore = create<BoardStore>((set) => ({
   },
   moves: [],
   setTheme: (theme) => set({ theme }),
-  addMove: (move, playAs) =>
-    set((state) => {
-      const moveNumber =
-        playAs === "white"
-          ? state.moves.filter((m) => m.white !== "").length + 1
-          : state.moves.length;
-
-      const updatedMoves = [...state.moves];
-
-      if (!updatedMoves[moveNumber - 1]) {
-        updatedMoves[moveNumber - 1] = {
-          white: "",
-          black: "",
-        };
-      }
-
-      if (playAs === "white") {
-        updatedMoves[moveNumber - 1].white = `${move.to}`;
-      } else if (playAs === "black") {
-        updatedMoves[moveNumber - 1].black = `${move.to}`;
-      }
-
-      return {
-        moves: updatedMoves,
-      };
-    }),
+  setMoves: (moves) => set({ moves }),
 }));

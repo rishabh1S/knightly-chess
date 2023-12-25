@@ -59,16 +59,19 @@ const SideBoardComponent: React.FC<SideBoardProps> = ({
             Moves
           </div>
           <ol className="px-4 list-decimal list-inside">
-            {Object.keys(moves).map((moveNumber) => (
-              <li key={moveNumber} className="font-semibold">
-                <span className="text-blue-400 mx-4">{`${
-                  moves[+moveNumber].white
-                }`}</span>
-                <span className="text-yellow-400 mx-4">{`${
-                  moves[+moveNumber].black
-                }`}</span>
-              </li>
-            ))}
+            {moves.map(
+              (move, index) =>
+                index % 2 === 0 && (
+                  <li key={index / 2} className="font-semibold">
+                    <span className="text-blue-400 mx-4">{move}</span>
+                    {index + 1 < moves.length && (
+                      <span className="text-yellow-400 mx-4">
+                        {moves[index + 1]}
+                      </span>
+                    )}
+                  </li>
+                )
+            )}
           </ol>
         </div>
       </div>

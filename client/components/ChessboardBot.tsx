@@ -62,7 +62,7 @@ const ChessboardBot: React.FC = () => {
   const engine = useMemo(() => new Engine(), []);
   const [game, setGame] = useState<ChessInstance>(new Chess());
   const theme = useBoardStore((state) => state.theme);
-  const addMove = useBoardStore((state) => state.addMove);
+  const setMoves = useBoardStore((state) => state.setMoves);
   const [moveFrom, setMoveFrom] = useState<Square | null>(null);
   const [moveTo, setMoveTo] = useState<Square | null>(null);
   const [showPromotionDialog, setShowPromotionDialog] = useState(false);
@@ -96,7 +96,9 @@ const ChessboardBot: React.FC = () => {
       }
       setShowGameModal(true);
     }
-  }, [game, playAs]);
+
+    setMoves(game.history());
+  }, [game, playAs, setMoves]);
 
   function getMoveOptions(square: Square) {
     const moves = game.moves({
@@ -144,7 +146,6 @@ const ChessboardBot: React.FC = () => {
 
         if (move) {
           setGame(game);
-          addMove(move, playAs === "white" ? "black" : "white");
         }
       }
     });
@@ -201,7 +202,6 @@ const ChessboardBot: React.FC = () => {
       setTimeout(makeStockfishMove, 500);
       setMoveFrom(null);
       setMoveTo(null);
-      addMove(move, playAs === "white" ? "white" : "black");
       setOptionSquares({});
       return;
     }
@@ -249,7 +249,7 @@ const ChessboardBot: React.FC = () => {
   return (
     <>
       <Chessboard
-        animationDuration={200}
+        animationDuration={300}
         arePiecesDraggable={false}
         boardOrientation={playAs as BoardOrientation}
         position={game.fen()}
