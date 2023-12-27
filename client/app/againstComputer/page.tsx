@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { ChessboardBot, SideBoardComponent } from "@/components";
+import { ChessboardBot, SideBoardComponent, EvalBar } from "@/components";
 import Image from "next/image";
 import * as FlagIcons from "country-flag-icons/react/3x2";
 import { Message } from "@/public/utils/types";
@@ -10,6 +10,7 @@ const AgainstComputer: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const searchParams = useSearchParams();
   const stockfishLevel = Number(searchParams.get("stockfishLevel"));
+  const pe = 0.4;
   const stockfishLevelSymbol =
     stockfishLevel === 2 ? "E" : stockfishLevel === 6 ? "M" : "H";
   const handleSendMessage = (message: string) => {
@@ -23,9 +24,13 @@ const AgainstComputer: React.FC = () => {
   };
 
   return (
-    <div className="h-screen bg-gray-800 text-white flex md:flex-row flex-col gap-6">
-      {/* Left side: Chessboard */}
-      <div className="flex flex-col items-center justify-center pl-12 gap-2">
+    <div className="h-screen bg-gray-800 text-white grid grid-cols-11 grid-rows-1 gap-4 px-4">
+      {/*EvalBar */}
+      <div className="py-2 flex justify-center">
+        <EvalBar pe={pe} />
+      </div>
+      {/* Chessboard */}
+      <div className="col-span-5 flex flex-col items-center justify-center gap-2">
         <div className="flex justify-start w-full py-1 gap-1">
           <Image
             src="/images/def_stock.jpeg"
@@ -62,11 +67,13 @@ const AgainstComputer: React.FC = () => {
         </div>
       </div>
 
-      {/* Right side: Chat feature */}
-      <SideBoardComponent
-        onSendMessage={handleSendMessage}
-        messages={messages}
-      />
+      {/* SideBoard */}
+      <div className="col-span-5 col-start-7">
+        <SideBoardComponent
+          onSendMessage={handleSendMessage}
+          messages={messages}
+        />
+      </div>
     </div>
   );
 };

@@ -75,6 +75,8 @@ const ChessboardBot: React.FC = () => {
   const playAs = searchParams.get("playAs");
   const [gameResult, setGameResult] = useState<string | null>(null);
   const [showGameModal, setShowGameModal] = useState(false);
+  const [boardWidth, setBoardWidth] = useState(560);
+  const [fen, setFen] = useState();
 
   useEffect(() => {
     if (playAs === "black") {
@@ -246,6 +248,28 @@ const ChessboardBot: React.FC = () => {
     }
   }
 
+  const getBoardWidth = () => {
+    const screenWidth = window.innerWidth;
+    if (screenWidth < 600) {
+      return 300;
+    } else if (screenWidth < 960) {
+      return 400;
+    } else {
+      return 560;
+    }
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setBoardWidth(getBoardWidth());
+    };
+    setBoardWidth(getBoardWidth());
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <>
       <Chessboard
@@ -253,7 +277,7 @@ const ChessboardBot: React.FC = () => {
         arePiecesDraggable={false}
         boardOrientation={playAs as BoardOrientation}
         position={game.fen()}
-        boardWidth={560}
+        boardWidth={boardWidth}
         onSquareClick={onSquareClick}
         onSquareRightClick={onSquareRightClick}
         onPromotionPieceSelect={onPromotionPieceSelect}

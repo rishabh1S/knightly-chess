@@ -51,7 +51,7 @@ const SideBoardComponent: React.FC<SideBoardProps> = ({
   };
 
   return (
-    <div className="grid grid-rows-[60%,40%] sm:w-2/5 w-4/5 bg-gray-900 my-4 rounded-md">
+    <div className="grid grid-rows-[60%,40%] w-4/5 h-[95%] bg-gray-900 my-4 rounded-md">
       {/* Moves Section (Top 60%) */}
       <div className="flex-1 overflow-y-auto border-b-[1px] border-gray-600">
         <div className="flex flex-col space-y-2">
