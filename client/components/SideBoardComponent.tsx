@@ -28,6 +28,8 @@ const SideBoardComponent: React.FC<SideBoardProps> = ({
   const moves = useBoardStore((state) => state.moves);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [showGameModal, setShowGameModal] = useState(false);
+  const onNewGame = useBoardStore((state) => state.onNewGame);
+  const gameResult = useBoardStore((state) => state.gameResult);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -142,13 +144,27 @@ const SideBoardComponent: React.FC<SideBoardProps> = ({
           >
             <MdOutlineSettings size={24} />
           </Button>
-          <Button variant="light" aria-label="Resign" className="ml-auto">
+          <Button
+            variant="light"
+            aria-label="Resign"
+            className="ml-auto"
+            onClick={(e) => {
+              e.preventDefault();
+              setShowGameModal(true);
+            }}
+          >
             <MdOutlinedFlag size={24} />
             Resign
           </Button>
         </div>
       </div>
       <SettingsModal isOpen={isOpen} onClose={onClose} />
+      <GameModal
+        isOpen={showGameModal}
+        onClose={() => setShowGameModal(false)}
+        gameResult={gameResult}
+        onNewGame={onNewGame}
+      />
     </>
   );
 };

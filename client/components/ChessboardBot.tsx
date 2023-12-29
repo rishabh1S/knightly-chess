@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useCallback } from "react";
 import { Chessboard } from "react-chessboard";
 import { Chess, Square, ChessInstance, ShortMove } from "chess.js";
 import {
@@ -63,6 +63,7 @@ const ChessboardBot: React.FC = () => {
   const [game, setGame] = useState<ChessInstance>(new Chess());
   const theme = useBoardStore((state) => state.theme);
   const setMoves = useBoardStore((state) => state.setMoves);
+  const setOnNewGame = useBoardStore((state) => state.setOnNewGame);
   const [moveFrom, setMoveFrom] = useState<Square | null>(null);
   const [moveTo, setMoveTo] = useState<Square | null>(null);
   const [showPromotionDialog, setShowPromotionDialog] = useState(false);
@@ -73,7 +74,10 @@ const ChessboardBot: React.FC = () => {
   const searchParams = useSearchParams();
   const stockfishLevel = Number(searchParams.get("stockfishLevel"));
   const playAs = searchParams.get("playAs");
-  const [gameResult, setGameResult] = useState<string | null>(null);
+  const [gameResult, setGameResult] = useBoardStore((state) => [
+    state.gameResult,
+    state.setGameResult,
+  ]);
   const [showGameModal, setShowGameModal] = useState(false);
   const [boardWidth, setBoardWidth] = useState(560);
   const [fen, setFen] = useState();
@@ -97,10 +101,12 @@ const ChessboardBot: React.FC = () => {
         setGameResult("It's a draw!");
       }
       setShowGameModal(true);
+    } else {
+      setGameResult("You Resigned!");
     }
 
     setMoves(game.history());
-  }, [game, playAs, setMoves]);
+  }, [game, playAs, setMoves, setGameResult]);
 
   function getMoveOptions(square: Square) {
     const moves = game.moves({
@@ -131,7 +137,7 @@ const ChessboardBot: React.FC = () => {
     return true;
   }
 
-  function makeStockfishMove() {
+  const makeStockfishMove = useCallback(() => {
     engine.evaluatePosition(game.fen(), stockfishLevel);
     engine.onMessage(({ bestMove }) => {
       if (bestMove) {
@@ -151,7 +157,7 @@ const ChessboardBot: React.FC = () => {
         }
       }
     });
-  }
+  }, [engine, game, setGame, stockfishLevel]);
 
   function onSquareClick(square: Square) {
     setRightClickedSquares({});
@@ -240,13 +246,21 @@ const ChessboardBot: React.FC = () => {
     });
   }
 
-  function onNewGame() {
+  const onNewGame = useCallback(() => {
     game.reset();
     useBoardStore.setState({ moves: [] });
     if (playAs === "black") {
       makeStockfishMove();
     }
-  }
+  }, [game, playAs, makeStockfishMove]);
+
+  useEffect(() => {
+    setOnNewGame(onNewGame);
+
+    return () => {
+      setOnNewGame(() => {});
+    };
+  }, [onNewGame, setOnNewGame]);
 
   const getBoardWidth = () => {
     const screenWidth = window.innerWidth;
