@@ -10,7 +10,7 @@ const AgainstComputer: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const searchParams = useSearchParams();
   const stockfishLevel = Number(searchParams.get("stockfishLevel"));
-  const pe = 0.4;
+  const pe = -0.4;
   const stockfishLevelSymbol =
     stockfishLevel === 2 ? "E" : stockfishLevel === 6 ? "M" : "H";
   const handleSendMessage = (message: string) => {
