@@ -15,6 +15,7 @@ import { Message } from "@/public/utils/types";
 import { useBoardStore } from "@/app/store";
 import { Tabs, Tab, Button, useDisclosure } from "@nextui-org/react";
 import { GameModal, SettingsModal } from ".";
+import toast from "react-hot-toast";
 
 interface SideBoardProps {
   onSendMessage: (message: string) => void;
@@ -34,6 +35,7 @@ const SideBoardComponent: React.FC<SideBoardProps> = ({
   const [resigned, setResigned] = useState(false);
   const onNewGame = useBoardStore((state) => state.onNewGame);
   const gameResult = useBoardStore((state) => state.gameResult);
+  const currentFEN = useBoardStore((state) => state.currentFEN);
   const router = useRouter();
 
   useEffect(() => {
@@ -65,9 +67,15 @@ const SideBoardComponent: React.FC<SideBoardProps> = ({
     }
   };
 
+  const handleLikeButtonClick = () => {
+    navigator.clipboard.writeText(currentFEN).then(() => {
+      toast.success("Pgn Copied!");
+    });
+  };
+
   return (
     <>
-      <div className="w-4/5 h-[95%] bg-slate-900 my-4 rounded-md flex flex-col">
+      <div className="h-full w-full sm:w-4/5 sm:h-[95%] bg-slate-900 sm:my-4 my-1 rounded-md flex flex-col">
         <Tabs key="underlined" variant="underlined" aria-label="Tabs">
           <Tab key="moves" title="Moves">
             {/* Moves Section */}
@@ -165,13 +173,18 @@ const SideBoardComponent: React.FC<SideBoardProps> = ({
             </div>
           )}
           <div className="flex px-1 gap-2">
-            <Button isIconOnly variant="light" aria-label="Like">
+            <Button
+              isIconOnly
+              variant="light"
+              aria-label="Share"
+              onClick={handleLikeButtonClick}
+            >
               <MdOutlineShare size={24} />
             </Button>
             <Button
               isIconOnly
               variant="light"
-              aria-label="Share"
+              aria-label="Settings"
               onClick={(e) => {
                 e.preventDefault();
                 onOpen();

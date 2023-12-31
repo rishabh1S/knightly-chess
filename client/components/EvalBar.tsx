@@ -30,7 +30,7 @@ const EvalBar: React.FC<EvalBarProps> = ({ pe }) => {
         }}
         className="w-full bg-black transition ease-in-out duration-700 text-center"
       >
-        <span className="text-sm font-bold text-white">
+        <span className="sm:text-sm text-xs font-bold text-white">
           {pe < 0 ? pe.toFixed(1) : ""}
         </span>
       </div>
@@ -41,7 +41,7 @@ const EvalBar: React.FC<EvalBarProps> = ({ pe }) => {
         className="w-full bg-gray-50 transition ease-in-out duration-700 text-center"
       >
         <div style={{ flex: "1" }} />
-        <span className="text-sm font-bold text-black">
+        <span className="sm:text-sm text-xs font-bold text-black">
           {pe >= 0 ? `+${pe.toFixed(1)}` : pe.toFixed(1)}
         </span>
       </div>

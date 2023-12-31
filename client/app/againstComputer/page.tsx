@@ -7,7 +7,6 @@ import { Message } from "@/public/utils/types";
 import { useSearchParams } from "next/navigation";
 
 const AgainstComputer: React.FC = () => {
-  const [loading, setLoading] = useState(true);
   const [messages, setMessages] = useState<Message[]>([]);
   const searchParams = useSearchParams();
   const stockfishLevel = Number(searchParams.get("stockfishLevel"));
@@ -24,19 +23,11 @@ const AgainstComputer: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    const delay = setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-
-    return () => clearTimeout(delay);
-  }, []);
-
   return (
-    <div className="h-screen bg-gray-800 text-white flex sm:flex-row flex-col gap-8 px-4">
-      <div className="flex gap-4">
+    <div className="h-screen bg-gray-800 text-white flex sm:flex-row flex-col sm:gap-8 gap-4 px-4 py-2">
+      <div className="flex justify-center gap-4">
         {/*EvalBar */}
-        <div className="py-2 flex justify-center">
+        <div className="sm:py-2 flex justify-center">
           <EvalBar pe={pe} />
         </div>
         {/* Chessboard */}
@@ -59,16 +50,7 @@ const AgainstComputer: React.FC = () => {
               </span>
             </div>
           </div>
-          {loading ? (
-            <Image
-              src="/images/chess.png"
-              width={1130}
-              height={1130}
-              alt="Chess"
-            />
-          ) : (
-            <ChessboardBot />
-          )}
+          <ChessboardBot />
           <div className="flex justify-start w-full gap-1">
             <Image
               src="/images/def_user.jpeg"

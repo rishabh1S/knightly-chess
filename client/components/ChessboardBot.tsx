@@ -283,6 +283,10 @@ const ChessboardBot: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    useBoardStore.setState({ currentFEN: game.fen() });
+  }, [game]);
+
   return (
     <>
       <Chessboard

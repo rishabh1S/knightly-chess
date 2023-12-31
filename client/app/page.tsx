@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { Button, useDisclosure } from "@nextui-org/react";
 import { GameSelectionModal } from "@/components";
 import { useState } from "react";
