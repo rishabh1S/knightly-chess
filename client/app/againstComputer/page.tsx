@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChessboardBot, SideBoardComponent, EvalBar } from "@/components";
 import Image from "next/image";
 import * as FlagIcons from "country-flag-icons/react/3x2";
@@ -7,6 +7,7 @@ import { Message } from "@/public/utils/types";
 import { useSearchParams } from "next/navigation";
 
 const AgainstComputer: React.FC = () => {
+  const [loading, setLoading] = useState(true);
   const [messages, setMessages] = useState<Message[]>([]);
   const searchParams = useSearchParams();
   const stockfishLevel = Number(searchParams.get("stockfishLevel"));
@@ -23,52 +24,71 @@ const AgainstComputer: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(delay);
+  }, []);
+
   return (
-    <div className="h-screen bg-gray-800 text-white grid grid-cols-11 grid-rows-1 gap-4 px-4">
-      {/*EvalBar */}
-      <div className="py-2 flex justify-center">
-        <EvalBar pe={pe} />
-      </div>
-      {/* Chessboard */}
-      <div className="col-span-5 flex flex-col items-center justify-center gap-2">
-        <div className="flex justify-start w-full py-1 gap-1">
-          <Image
-            src="/images/def_stock.jpeg"
-            width={40}
-            height={40}
-            alt="Bot Profile"
-            className="rounded-md"
-          />
-          <div className="flex items-start justify-center gap-1 font-semibold">
-            StockFish
-            <span className="text-gray-300 font-light">
-              ({stockfishLevelSymbol})
-            </span>
-            <span>
-              <FlagIcons.US className="w-4 h-4 mx-1 mt-1" />
-            </span>
-          </div>
+    <div className="h-screen bg-gray-800 text-white flex sm:flex-row flex-col gap-8 px-4">
+      <div className="flex gap-4">
+        {/*EvalBar */}
+        <div className="py-2 flex justify-center">
+          <EvalBar pe={pe} />
         </div>
-        <ChessboardBot />
-        <div className="flex justify-start w-full gap-1">
-          <Image
-            src="/images/def_user.jpeg"
-            width={40}
-            height={40}
-            alt="User Profile"
-            className="rounded-md"
-          />
-          <div className="flex items-start justify-center gap-1 font-semibold">
-            Rishabh
-            <span>
-              <FlagIcons.IN className="w-4 h-4 mx-1 mt-1" />
-            </span>
+        {/* Chessboard */}
+        <div className="flex flex-col items-center justify-center gap-2">
+          <div className="flex justify-start w-full py-1 gap-1">
+            <Image
+              src="/images/def_stock.jpeg"
+              width={40}
+              height={40}
+              alt="Bot Profile"
+              className="rounded-md"
+            />
+            <div className="flex items-start justify-center gap-1 font-semibold">
+              StockFish
+              <span className="text-gray-300 font-light">
+                ({stockfishLevelSymbol})
+              </span>
+              <span>
+                <FlagIcons.US className="w-4 h-4 mx-1 mt-1" />
+              </span>
+            </div>
+          </div>
+          {loading ? (
+            <Image
+              src="/images/chess.png"
+              width={1130}
+              height={1130}
+              alt="Chess"
+            />
+          ) : (
+            <ChessboardBot />
+          )}
+          <div className="flex justify-start w-full gap-1">
+            <Image
+              src="/images/def_user.jpeg"
+              width={40}
+              height={40}
+              alt="User Profile"
+              className="rounded-md"
+            />
+            <div className="flex items-start justify-center gap-1 font-semibold">
+              Rishabh
+              <span>
+                <FlagIcons.IN className="w-4 h-4 mx-1 mt-1" />
+              </span>
+            </div>
           </div>
         </div>
       </div>
 
       {/* SideBoard */}
-      <div className="col-span-5 col-start-7">
+      <div className="w-full h-full">
         <SideBoardComponent
           onSendMessage={handleSendMessage}
           messages={messages}

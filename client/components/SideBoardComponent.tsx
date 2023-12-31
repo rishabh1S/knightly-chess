@@ -1,13 +1,16 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import EmojiPicker, { Theme } from "emoji-picker-react";
 import {
   MdOutlineShare,
   MdOutlineEmojiEmotions,
   MdOutlineSettings,
   MdOutlinedFlag,
+  MdAdd,
 } from "react-icons/md";
+import { BsArrowRepeat } from "react-icons/bs";
 import { Message } from "@/public/utils/types";
 import { useBoardStore } from "@/app/store";
 import { Tabs, Tab, Button, useDisclosure } from "@nextui-org/react";
@@ -28,8 +31,10 @@ const SideBoardComponent: React.FC<SideBoardProps> = ({
   const moves = useBoardStore((state) => state.moves);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [showGameModal, setShowGameModal] = useState(false);
+  const [resigned, setResigned] = useState(false);
   const onNewGame = useBoardStore((state) => state.onNewGame);
   const gameResult = useBoardStore((state) => state.gameResult);
+  const router = useRouter();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -129,33 +134,65 @@ const SideBoardComponent: React.FC<SideBoardProps> = ({
             </div>
           </Tab>
         </Tabs>
-        <div className="mt-auto bg-slate-950 flex py-2 px-1 gap-2">
-          <Button isIconOnly variant="light" aria-label="Like">
-            <MdOutlineShare size={24} />
-          </Button>
-          <Button
-            isIconOnly
-            variant="light"
-            aria-label="Share"
-            onClick={(e) => {
-              e.preventDefault();
-              onOpen();
-            }}
-          >
-            <MdOutlineSettings size={24} />
-          </Button>
-          <Button
-            variant="light"
-            aria-label="Resign"
-            className="ml-auto"
-            onClick={(e) => {
-              e.preventDefault();
-              setShowGameModal(true);
-            }}
-          >
-            <MdOutlinedFlag size={24} />
-            Resign
-          </Button>
+        <div className="mt-auto rounded-md bg-slate-950 py-2 flex flex-col">
+          {resigned && (
+            <div className="py-2 flex justify-around">
+              <Button
+                color="success"
+                aria-label="Rematch"
+                radius="none"
+                size="lg"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNewGame();
+                  setResigned(false);
+                }}
+              >
+                <BsArrowRepeat size={24} />
+                Rematch
+              </Button>
+              <Button
+                color="success"
+                variant="ghost"
+                aria-label="New"
+                radius="none"
+                size="lg"
+                onClick={() => router.push("/")}
+              >
+                <MdAdd size={24} />
+                New Game
+              </Button>
+            </div>
+          )}
+          <div className="flex px-1 gap-2">
+            <Button isIconOnly variant="light" aria-label="Like">
+              <MdOutlineShare size={24} />
+            </Button>
+            <Button
+              isIconOnly
+              variant="light"
+              aria-label="Share"
+              onClick={(e) => {
+                e.preventDefault();
+                onOpen();
+              }}
+            >
+              <MdOutlineSettings size={24} />
+            </Button>
+            <Button
+              variant="light"
+              aria-label="Resign"
+              className="ml-auto"
+              onClick={(e) => {
+                e.preventDefault();
+                setShowGameModal(true);
+                setResigned(true);
+              }}
+            >
+              <MdOutlinedFlag size={24} />
+              Resign
+            </Button>
+          </div>
         </div>
       </div>
       <SettingsModal isOpen={isOpen} onClose={onClose} />
@@ -163,7 +200,10 @@ const SideBoardComponent: React.FC<SideBoardProps> = ({
         isOpen={showGameModal}
         onClose={() => setShowGameModal(false)}
         gameResult={gameResult}
-        onNewGame={onNewGame}
+        onNewGame={() => {
+          onNewGame();
+          setResigned(false);
+        }}
       />
     </>
   );

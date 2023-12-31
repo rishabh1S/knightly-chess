@@ -80,7 +80,6 @@ const ChessboardBot: React.FC = () => {
   ]);
   const [showGameModal, setShowGameModal] = useState(false);
   const [boardWidth, setBoardWidth] = useState(560);
-  const [fen, setFen] = useState();
 
   useEffect(() => {
     if (playAs === "black") {
@@ -265,7 +264,7 @@ const ChessboardBot: React.FC = () => {
   const getBoardWidth = () => {
     const screenWidth = window.innerWidth;
     if (screenWidth < 600) {
-      return 300;
+      return 260;
     } else if (screenWidth < 960) {
       return 400;
     } else {

@@ -23,7 +23,7 @@ const EvalBar: React.FC<EvalBarProps> = ({ pe }) => {
   }, [pe]);
 
   return (
-    <div className="md:w-10 w-8 h-full mr-1 mx-2">
+    <div className="w-4 sm:w-8 h-full sm:mr-1 sm:mx-2">
       <div
         style={{
           height: `${100 - wHeight}%`,
