@@ -75,7 +75,7 @@ const SideBoardComponent: React.FC<SideBoardProps> = ({
 
   return (
     <>
-      <div className="h-full w-full sm:w-4/5 sm:h-[95%] bg-slate-900 sm:my-4 my-1 rounded-md flex flex-col">
+      <div className="h-full w-full sm:w-3/4 sm:h-[95%] bg-slate-900 sm:my-4 my-1 rounded-md flex flex-col">
         <Tabs key="underlined" variant="underlined" aria-label="Tabs">
           <Tab key="moves" title="Moves">
             {/* Moves Section */}
@@ -99,7 +99,7 @@ const SideBoardComponent: React.FC<SideBoardProps> = ({
           </Tab>
           <Tab key="chat" title="Chat" className="flex flex-col h-full">
             {/* Chat Messages */}
-            <div className="flex-1 overflow-y-auto max-h-[30rem] px-4 py-1">
+            <div className="flex-1 overflow-y-auto max-h-[29rem] px-4 py-1">
               <div className="flex flex-col-reverse space-y-1">
                 {messages
                   .slice()

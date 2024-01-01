@@ -6,7 +6,6 @@ import SettingsModal from "./SettingsModal";
 import GameSelectionModal from "./GameSelectionModal";
 import PlayAsButton from "./PlayAsButton";
 import GameModal from "./GameModal";
-import EvalBar from "./EvalBar";
 
 export {
   SideBar,
@@ -17,5 +16,4 @@ export {
   GameSelectionModal,
   PlayAsButton,
   GameModal,
-  EvalBar,
 };

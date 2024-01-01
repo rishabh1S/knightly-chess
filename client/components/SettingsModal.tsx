@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import {
   Modal,
   ModalContent,
@@ -6,6 +7,8 @@ import {
   ModalBody,
   ModalFooter,
   Button,
+  Input,
+  Avatar,
   Tooltip,
 } from "@nextui-org/react";
 import { useBoardStore } from "@/app/store";
@@ -16,9 +19,14 @@ interface SettingsModalProps {
 }
 
 const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
-  const theme = useBoardStore((state) => state.theme);
   const setTheme = useBoardStore((state) => state.setTheme);
-
+  const { userName, profilePhoto, setUserName, setProfilePhoto } =
+    useBoardStore((state) => ({
+      userName: state.userName,
+      profilePhoto: state.profilePhoto,
+      setUserName: state.setUserName,
+      setProfilePhoto: state.setProfilePhoto,
+    }));
   const themes = [
     {
       dark: { backgroundColor: "#779952" },
@@ -60,35 +68,58 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
     onClose();
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setProfilePhoto(URL.createObjectURL(file));
+    } else {
+      console.error("Invalid file type or no file selected.");
+    }
+  };
+
   return (
     <>
       <Modal size="lg" isOpen={isOpen} onClose={onClose}>
         <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">
-                Game Settings
-              </ModalHeader>
-              <ModalBody>
-                <p>Board Theme</p>
-                <div className="grid grid-cols-3 gap-2">
-                  {themes.map((t, index) => (
-                    <Tooltip color="default" key={index} content={t.label}>
-                      <Button
-                        color="default"
-                        style={{
-                          width: "100%",
-                          background: `linear-gradient(90deg, ${t.dark.backgroundColor} 50%, ${t.light.backgroundColor} 50%)`,
-                        }}
-                        onClick={() => changeTheme(t.dark, t.light)}
-                      />
-                    </Tooltip>
-                  ))}
-                </div>
-              </ModalBody>
-              <ModalFooter></ModalFooter>
-            </>
-          )}
+          <ModalHeader className="flex flex-col gap-1">
+            Game Settings
+          </ModalHeader>
+          <ModalBody>
+            <p>User Information</p>
+            <div className="flex gap-2">
+              <label htmlFor="profile-photo" className="cursor-pointer">
+                <Avatar size="lg" src={profilePhoto} />
+                <Input
+                  id="profile-photo"
+                  type="file"
+                  onChange={handleFileChange}
+                  className="hidden"
+                />
+              </label>
+              <Input
+                label="User Name"
+                placeholder="Enter your name"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+              />
+            </div>
+            <p>Board Theme</p>
+            <div className="grid grid-cols-3 gap-2">
+              {themes.map((t, index) => (
+                <Tooltip color="default" key={index} content={t.label}>
+                  <Button
+                    color="default"
+                    style={{
+                      width: "100%",
+                      background: `linear-gradient(90deg, ${t.dark.backgroundColor} 50%, ${t.light.backgroundColor} 50%)`,
+                    }}
+                    onClick={() => changeTheme(t.dark, t.light)}
+                  />
+                </Tooltip>
+              ))}
+            </div>
+          </ModalBody>
+          <ModalFooter></ModalFooter>
         </ModalContent>
       </Modal>
     </>
