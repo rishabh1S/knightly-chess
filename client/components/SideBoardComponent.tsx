@@ -97,7 +97,7 @@ const SideBoardComponent: React.FC<SideBoardProps> = ({
               </ol>
             </div>
           </Tab>
-          <Tab key="chat" title="Chat" className="flex flex-col h-full">
+          <Tab key="chat" title="Chat" className="flex flex-col">
             {/* Chat Messages */}
             <div className="flex-1 overflow-y-auto max-h-[29rem] px-4 py-1">
               <div className="flex flex-col-reverse space-y-1">
@@ -117,10 +117,10 @@ const SideBoardComponent: React.FC<SideBoardProps> = ({
               <input
                 type="text"
                 placeholder="Type your message..."
-                className="w-full px-4 py-2 bg-slate-900 text-white border-t-[1px] border-gray-600 focus:outline-none rounded-t-none rounded-md"
+                className="w-full px-4 py-2 bg-slate-900 text-white border-t-[1px] border-gray-600 focus:outline-none"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
+                onKeyUp={handleKeyPress}
               />
 
               {/* Emoji Picker */}
