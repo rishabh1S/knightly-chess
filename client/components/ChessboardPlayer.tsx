@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Chessboard } from "react-chessboard";
 import { Chess, Square, ChessInstance, ShortMove } from "chess.js";
 import {
@@ -13,53 +13,7 @@ import { useSearchParams } from "next/navigation";
 import { BoardOrientation } from "react-chessboard/dist/chessboard/types";
 import { GameModal } from ".";
 
-class Engine {
-  private stockfish: Worker | null;
-
-  constructor() {
-    this.stockfish =
-      typeof Worker !== "undefined" ? new Worker("/stockfish.js") : null;
-    this.onMessage = this.onMessage.bind(this);
-
-    if (this.stockfish) {
-      this.sendMessage("uci");
-      this.sendMessage("isready");
-    }
-  }
-
-  onMessage(callback: (data: { bestMove: string }) => void) {
-    if (this.stockfish) {
-      this.stockfish.addEventListener("message", (e) => {
-        const bestMove = e.data?.match(/bestmove\s+(\S+)/)?.[1];
-        callback({ bestMove });
-      });
-    }
-  }
-
-  evaluatePosition(fen: string, depth: number) {
-    if (this.stockfish) {
-      this.stockfish.postMessage(`position fen ${fen}`);
-      this.stockfish.postMessage(`go depth ${depth}`);
-    }
-  }
-
-  stop() {
-    this.sendMessage("stop");
-  }
-
-  quit() {
-    this.sendMessage("quit");
-  }
-
-  private sendMessage(message: string) {
-    if (this.stockfish) {
-      this.stockfish.postMessage(message);
-    }
-  }
-}
-
-const ChessboardBot: React.FC = () => {
-  const engine = useMemo(() => new Engine(), []);
+const ChessboardPlayer: React.FC = () => {
   const [game, setGame] = useState<ChessInstance>(new Chess());
   const theme = useBoardStore((state) => state.theme);
   const setMoves = useBoardStore((state) => state.setMoves);
@@ -291,4 +245,4 @@ const ChessboardBot: React.FC = () => {
   );
 };
 
-export default ChessboardBot;
+export default ChessboardPlayer;

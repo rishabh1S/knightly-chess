@@ -45,7 +45,7 @@ const AgainstFriend: React.FC = () => {
               className="rounded-md"
             />
             <div className="flex items-start justify-center gap-1 font-semibold">
-              StockFish
+              Player-1
               <span className="text-gray-300 font-light">(1000)</span>
               <span>
                 <FlagIcons.US className="w-4 h-4 mx-1 mt-1" />
@@ -65,7 +65,7 @@ const AgainstFriend: React.FC = () => {
               className="rounded-md"
             />
             <div className="flex items-start justify-center gap-1 font-semibold">
-              {userName}
+              Player-2
               <span>
                 <FlagIcons.IN className="w-4 h-4 mx-1 mt-1" />
               </span>

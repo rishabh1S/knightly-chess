@@ -28,13 +28,10 @@ const SideBar = () => {
       }
     };
 
-    // Initial setup
     handleResize();
 
-    // Add event listener for window resize
     window.addEventListener("resize", handleResize);
 
-    // Cleanup the event listener on component unmount
     return () => {
       window.removeEventListener("resize", handleResize);
     };
@@ -83,11 +80,15 @@ const SideBar = () => {
             </li>
             <li>
               <Link
-                href="/social"
+                href=""
+                onClick={(e) => {
+                  e.preventDefault();
+                  onOpen();
+                }}
                 className="flex items-center justify-end lg:justify-center sm:px-5 py-4 sm:py-2 text-white hover:bg-slate-900 group"
               >
-                <IoPeople size={iconWidth} className="m-1 sm:m-0" />
-                <span className="ms-3 hidden lg:block">Social</span>
+                <IoSettingsOutline size={iconWidth} className="m-1 sm:m-0" />
+                <span className="ms-3 hidden lg:block">Settings</span>
               </Link>
             </li>
             <li>

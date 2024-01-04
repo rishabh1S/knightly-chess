@@ -1,0 +1,9 @@
+# dependencies
+/node_modules
+
+# UrTurn production build artifacts:
+# https://docs.urturn.app/docs/Getting-Started/deploying-your-game#build-artifact-spec
+/build
+/frontend/build
+/index.js
+/index.js.map

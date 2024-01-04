@@ -97,7 +97,7 @@ const SideBoardComponent: React.FC<SideBoardProps> = ({
               </ol>
             </div>
           </Tab>
-          <Tab key="chat" title="Chat" className="flex flex-col">
+          <Tab key="chat" title="Chat" className="flex flex-col h-full">
             {/* Chat Messages */}
             <div className="flex-1 overflow-y-auto max-h-[29rem] px-4 py-1">
               <div className="flex flex-col-reverse space-y-1">
