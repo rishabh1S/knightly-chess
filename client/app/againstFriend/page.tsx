@@ -66,6 +66,7 @@ const AgainstFriend: React.FC = () => {
             />
             <div className="flex items-start justify-center gap-1 font-semibold">
               Player-2
+              <span className="text-gray-300 font-light">(1200)</span>
               <span>
                 <FlagIcons.IN className="w-4 h-4 mx-1 mt-1" />
               </span>

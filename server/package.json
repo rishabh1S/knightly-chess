@@ -1,37 +1,17 @@
 {
-  "name": "@urturn/chess-tutorial",
-  "version": "0.1.7",
-  "description": "template UrTurn game with ReactJS",
-  "main": "index.js",
-  "private": true,
+  "name": "chess",
+  "version": "1.0.0",
+  "description": "Backend code to handle multiplayer game logic",
+  "main": "main.js",
   "scripts": {
-    "build": "rollup -c",
-    "dev": "concurrently \"npm run dev:rollup\" \"npm run dev:runner\" \"npm run dev:frontend\"",
-    "dev:runner": "runner --frontend-port 3000",
-    "dev:rollup": "rollup -c -w",
-    "dev:frontend": "cd frontend && cross-env BROWSER=none PORT=3000 npm start",
-    "lint": "echo TODO lint",
-    "lint:fix": "echo TODO lint fix"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/turnbasedgames/urturn.git"
-  },
-  "author": "",
+  "author": "rishabh1s",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/turnbasedgames/urturn/issues"
-  },
-  "homepage": "https://github.com/turnbasedgames/urturn#readme",
-  "devDependencies": {
-    "@rollup/plugin-commonjs": "^23.0.2",
-    "@rollup/plugin-node-resolve": "^15.0.1",
-    "@urturn/runner": "0.6.0",
-    "concurrently": "^7.1.0",
-    "cross-env": "^7.0.3",
-    "rollup": "^3.2.5"
-  },
   "dependencies": {
-    "chess.js": "^1.0.0-alpha.0"
+    "@urturn/runner": "^0.6.0",
+    "chess.js": "^0.13.4",
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3"
   }
 }

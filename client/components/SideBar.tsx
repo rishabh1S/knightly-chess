@@ -91,19 +91,6 @@ const SideBar = () => {
                 <span className="ms-3 hidden lg:block">Settings</span>
               </Link>
             </li>
-            <li>
-              <Link
-                href=""
-                onClick={(e) => {
-                  e.preventDefault();
-                  onOpen();
-                }}
-                className="flex items-center justify-end lg:justify-center sm:px-5 py-4 sm:py-2 text-white hover:bg-slate-900 group"
-              >
-                <IoSettingsOutline size={iconWidth} className="m-1 sm:m-0" />
-                <span className="ms-3 hidden lg:block">Settings</span>
-              </Link>
-            </li>
           </ul>
         </div>
       </aside>

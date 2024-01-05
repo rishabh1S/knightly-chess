@@ -13,6 +13,7 @@ import {
   cn,
 } from "@nextui-org/react";
 import { PlayAsButton } from ".";
+import { v4 as uuidv4 } from "uuid";
 
 interface GameSelectionModalProps {
   isOpen: boolean;
@@ -46,6 +47,8 @@ const GameSelectionModal: React.FC<GameSelectionModalProps> = ({
 }) => {
   const [stockfishLevel, setStockfishLevel] = useState(2);
   const [timer, setTimer] = useState(10);
+  const removeHyphens = (uuid: string) => uuid.replace(/-/g, "");
+  const uniqueRoomId = removeHyphens(uuidv4());
 
   return (
     <>
@@ -96,12 +99,12 @@ const GameSelectionModal: React.FC<GameSelectionModalProps> = ({
                   <>
                     <PlayAsButton
                       content="Black"
-                      href={`/againstFriend?timer=${timer}&playAs=black`}
+                      href={`/againstFriend?timer=${timer}&playAs=black&roomId=${uniqueRoomId}`}
                       stockfishLevel={stockfishLevel}
                     />
                     <PlayAsButton
                       content="White"
-                      href={`/againstFriend?timer=${timer}&playAs=white`}
+                      href={`/againstFriend?timer=${timer}&playAs=white&roomId=${uniqueRoomId}`}
                       stockfishLevel={stockfishLevel}
                     />
                   </>
