@@ -7,13 +7,11 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Slider,
   RadioGroup,
   Radio,
   cn,
 } from "@nextui-org/react";
 import { PlayAsButton } from ".";
-import { v4 as uuidv4 } from "uuid";
 
 interface GameSelectionModalProps {
   isOpen: boolean;
@@ -46,9 +44,6 @@ const GameSelectionModal: React.FC<GameSelectionModalProps> = ({
   selectedGameMode,
 }) => {
   const [stockfishLevel, setStockfishLevel] = useState(2);
-  const [timer, setTimer] = useState(10);
-  const removeHyphens = (uuid: string) => uuid.replace(/-/g, "");
-  const uniqueRoomId = removeHyphens(uuidv4());
 
   return (
     <>
@@ -64,64 +59,31 @@ const GameSelectionModal: React.FC<GameSelectionModalProps> = ({
                   : "Unknown Game Mode"}
               </ModalHeader>
               <ModalBody>
-                {selectedGameMode === "friend" && (
-                  <Slider
-                    size="sm"
-                    label="Minutes per side"
-                    step={1}
-                    maxValue={180}
-                    minValue={1}
-                    defaultValue={10}
-                    className="max-w-md"
-                    onChange={(value) => {
-                      setTimer(Number(value));
+                <div className="flex flex-col items-center gap-3 p-2">
+                  <div>Strength</div>
+                  <RadioGroup
+                    orientation="horizontal"
+                    onValueChange={(value) => {
+                      setStockfishLevel(Number(value));
                     }}
-                  />
-                )}
-                {selectedGameMode === "computer" && (
-                  <div className="flex flex-col items-center gap-3 p-2">
-                    <div>Strength</div>
-                    <RadioGroup
-                      orientation="horizontal"
-                      onValueChange={(value) => {
-                        setStockfishLevel(Number(value));
-                      }}
-                    >
-                      <CustomRadio value="2">Easy 🤓</CustomRadio>
-                      <CustomRadio value="6">Medium 🧐</CustomRadio>
-                      <CustomRadio value="12">Hard 😵</CustomRadio>
-                    </RadioGroup>
-                  </div>
-                )}
+                  >
+                    <CustomRadio value="2">Easy 🤓</CustomRadio>
+                    <CustomRadio value="6">Medium 🧐</CustomRadio>
+                    <CustomRadio value="12">Hard 😵</CustomRadio>
+                  </RadioGroup>
+                </div>
               </ModalBody>
               <ModalFooter className="flex justify-center">
-                {selectedGameMode === "friend" ? (
-                  <>
-                    <PlayAsButton
-                      content="Black"
-                      href={`/againstFriend?timer=${timer}&playAs=black&roomId=${uniqueRoomId}`}
-                      stockfishLevel={stockfishLevel}
-                    />
-                    <PlayAsButton
-                      content="White"
-                      href={`/againstFriend?timer=${timer}&playAs=white&roomId=${uniqueRoomId}`}
-                      stockfishLevel={stockfishLevel}
-                    />
-                  </>
-                ) : (
-                  <>
-                    <PlayAsButton
-                      content="Black"
-                      href={`/againstComputer?stockfishLevel=${stockfishLevel}&playAs=black`}
-                      stockfishLevel={stockfishLevel}
-                    />
-                    <PlayAsButton
-                      content="White"
-                      href={`/againstComputer?stockfishLevel=${stockfishLevel}&playAs=white`}
-                      stockfishLevel={stockfishLevel}
-                    />
-                  </>
-                )}
+                <PlayAsButton
+                  content="Black"
+                  href={`/againstComputer?stockfishLevel=${stockfishLevel}&playAs=black`}
+                  stockfishLevel={stockfishLevel}
+                />
+                <PlayAsButton
+                  content="White"
+                  href={`/againstComputer?stockfishLevel=${stockfishLevel}&playAs=white`}
+                  stockfishLevel={stockfishLevel}
+                />
               </ModalFooter>
             </>
           )}

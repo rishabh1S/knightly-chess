@@ -64,6 +64,7 @@ const ChessboardBot: React.FC = () => {
   const theme = useBoardStore((state) => state.theme);
   const setMoves = useBoardStore((state) => state.setMoves);
   const setOnNewGame = useBoardStore((state) => state.setOnNewGame);
+  const setGameOver = useBoardStore((state) => state.setGameOver);
   const [moveFrom, setMoveFrom] = useState<Square | null>(null);
   const [moveTo, setMoveTo] = useState<Square | null>(null);
   const [showPromotionDialog, setShowPromotionDialog] = useState(false);
@@ -100,12 +101,13 @@ const ChessboardBot: React.FC = () => {
         setGameResult("It's a draw!");
       }
       setShowGameModal(true);
+      setGameOver(true);
     } else {
       setGameResult("You Resigned!");
     }
 
     setMoves(game.history());
-  }, [game, playAs, setMoves, setGameResult]);
+  }, [game, playAs, setMoves, setGameResult, setGameOver]);
 
   function getMoveOptions(square: Square) {
     const moves = game.moves({

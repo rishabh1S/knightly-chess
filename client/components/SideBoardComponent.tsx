@@ -32,7 +32,8 @@ const SideBoardComponent: React.FC<SideBoardProps> = ({
   const moves = useBoardStore((state) => state.moves);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [showGameModal, setShowGameModal] = useState(false);
-  const [resigned, setResigned] = useState(false);
+  const gameOver = useBoardStore((state) => state.gameOver);
+  const setGameOver = useBoardStore((state) => state.setGameOver);
   const onNewGame = useBoardStore((state) => state.onNewGame);
   const gameResult = useBoardStore((state) => state.gameResult);
   const currentFEN = useBoardStore((state) => state.currentFEN);
@@ -79,7 +80,7 @@ const SideBoardComponent: React.FC<SideBoardProps> = ({
         <Tabs key="underlined" variant="underlined" aria-label="Tabs">
           <Tab key="moves" title="Moves">
             {/* Moves Section */}
-            <div className="flex flex-col space-y-2">
+            <div className="flex flex-col space-y-2 overflow-y-auto max-h-[460px]">
               <ol className="px-4 list-decimal list-inside">
                 {moves.map(
                   (move, index) =>
@@ -99,7 +100,7 @@ const SideBoardComponent: React.FC<SideBoardProps> = ({
           </Tab>
           <Tab key="chat" title="Chat" className="flex flex-col h-full">
             {/* Chat Messages */}
-            <div className="flex-1 overflow-y-auto max-h-[29rem] px-4 py-1">
+            <div className="flex-1 overflow-y-auto max-h-[480px] px-4 py-1">
               <div className="flex flex-col-reverse space-y-1">
                 {messages
                   .slice()
@@ -113,7 +114,7 @@ const SideBoardComponent: React.FC<SideBoardProps> = ({
               </div>
             </div>
             {/* Chat Input */}
-            <div className="mt-4 relative" ref={emojiPickerRef}>
+            <div className="mt-auto relative" ref={emojiPickerRef}>
               <input
                 type="text"
                 placeholder="Type your message..."
@@ -143,7 +144,7 @@ const SideBoardComponent: React.FC<SideBoardProps> = ({
           </Tab>
         </Tabs>
         <div className="mt-auto rounded-md bg-slate-950 py-2 flex flex-col">
-          {resigned && (
+          {gameOver && (
             <div className="py-2 flex justify-around">
               <Button
                 color="success"
@@ -153,7 +154,7 @@ const SideBoardComponent: React.FC<SideBoardProps> = ({
                 onClick={(e) => {
                   e.preventDefault();
                   onNewGame();
-                  setResigned(false);
+                  setGameOver(false);
                 }}
               >
                 <BsArrowRepeat size={24} />
@@ -199,7 +200,7 @@ const SideBoardComponent: React.FC<SideBoardProps> = ({
               onClick={(e) => {
                 e.preventDefault();
                 setShowGameModal(true);
-                setResigned(true);
+                setGameOver(true);
               }}
             >
               <MdOutlinedFlag size={24} />
@@ -215,7 +216,7 @@ const SideBoardComponent: React.FC<SideBoardProps> = ({
         gameResult={gameResult}
         onNewGame={() => {
           onNewGame();
-          setResigned(false);
+          setGameOver(false);
         }}
       />
     </>

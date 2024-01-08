@@ -12,6 +12,7 @@ type BoardStore = {
   currentFEN: string;
   userName: string;
   profilePhoto: string;
+  gameOver: boolean;
   onNewGame: () => void;
   setTheme: (theme: Theme) => void;
   setMoves: (moves: String[]) => void;
@@ -20,6 +21,7 @@ type BoardStore = {
   setCurrentFEN: (fen: string) => void;
   setUserName: (name: string) => void;
   setProfilePhoto: (photo: string) => void;
+  setGameOver: (gameOver: boolean) => void;
 };
 
 export const useBoardStore = create<BoardStore>((set) => ({
@@ -32,6 +34,7 @@ export const useBoardStore = create<BoardStore>((set) => ({
   currentFEN: "",
   userName: "User",
   profilePhoto: "/images/def_user.jpeg",
+  gameOver: false,
   onNewGame: () => {},
   setTheme: (theme) => set({ theme }),
   setMoves: (moves) => set({ moves }),
@@ -40,4 +43,5 @@ export const useBoardStore = create<BoardStore>((set) => ({
   setCurrentFEN: (fen) => set({ currentFEN: fen }),
   setUserName: (name) => set({ userName: name }),
   setProfilePhoto: (photo) => set({ profilePhoto: photo }),
+  setGameOver: (gameOver) => set({ gameOver }),
 }));

@@ -21,16 +21,6 @@ export default function Home() {
           variant="ghost"
           onClick={(e) => {
             e.preventDefault();
-            openModal("friend");
-          }}
-        >
-          Against Friend
-        </Button>
-        <Button
-          color="success"
-          variant="ghost"
-          onClick={(e) => {
-            e.preventDefault();
             openModal("computer");
           }}
         >
