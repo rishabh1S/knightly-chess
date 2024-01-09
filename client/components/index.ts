@@ -5,7 +5,6 @@ import SettingsModal from "./SettingsModal";
 import GameSelectionModal from "./GameSelectionModal";
 import PlayAsButton from "./PlayAsButton";
 import GameModal from "./GameModal";
-import TimerComponent from "./TimerComponent";
 
 export {
   SideBar,
@@ -15,5 +14,4 @@ export {
   GameSelectionModal,
   PlayAsButton,
   GameModal,
-  TimerComponent,
 };
