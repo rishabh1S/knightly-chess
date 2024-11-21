@@ -24,7 +24,7 @@ export default function Home() {
             openModal("computer");
           }}
         >
-          Against Computer
+          Start Playing
         </Button>
       </div>
       <GameSelectionModal
